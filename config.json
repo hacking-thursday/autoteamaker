@@ -1,0 +1,7 @@
+{
+	"stepper":{
+		"gpio_direction": 22,
+		"gpio_step": 27,
+		"gpio_enable": 17
+	}
+}

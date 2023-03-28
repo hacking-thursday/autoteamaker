@@ -1,0 +1,59 @@
+#!/usr/bin/env python
+
+import json
+import os
+import sys
+import RPi.GPIO as GPIO
+from RpiMotorLib import RpiMotorLib
+
+base_path = os.path.dirname(os.path.abspath(__file__))
+
+config_path = os.path.join(base_path, '..', 'config.json')
+
+try:
+    with open(config_path, 'r') as f:
+        config = json.load(f)
+
+    GPIO_DIRECTION = config['stepper']['gpio_direction']
+    GPIO_STEP = config['stepper']['gpio_step']
+    GPIO_ENABLE = config['stepper']['gpio_enable']
+
+    GPIO_DIRECTION = int(GPIO_DIRECTION)
+    GPIO_STEP = int(GPIO_STEP)
+    GPIO_ENABLE = int(GPIO_ENABLE)
+
+    if GPIO_DIRECTION in range(0,27+1) and GPIO_STEP in range(0,27+1) and GPIO_ENABLE in range(0,27+1):
+        pass
+    else:
+        print("[ERR] Abnormal GPIO settings: ", "\n\tGPIO_DIRECTION:", GPIO_DIRECTION , "\n\tGPIO_STEP:", GPIO_STEP , "\n\tGPIO_ENABLE:", GPIO_ENABLE)
+        exit()
+except:
+    print( "[ERR] Reading settings from config.json failed" )
+    exit()
+
+    
+#define GPIO pins
+GPIO_pins = (-1, -1, -1) # Microstep Resolution MS1-MS3 -> GPIO Pin
+direction= GPIO_DIRECTION       # Direction -> GPIO Pin
+step = GPIO_STEP      # Step -> GPIO Pin
+
+# Declare an named instance of class pass GPIO pins numbers
+mymotortest = RpiMotorLib.A4988Nema(direction, step, GPIO_pins, "A4988")
+
+GPIO.setup (GPIO_ENABLE,GPIO.OUT)
+GPIO.output(GPIO_ENABLE,GPIO.LOW)
+
+user_input = int(sys.argv[1])
+print(user_input)
+
+if user_input > 0:
+    up_or_down = True
+else:
+    up_or_down = False
+
+round_cnt = abs(user_input)
+
+# call the function, pass the arguments
+mymotortest.motor_go(up_or_down, "Full" , 200 * round_cnt, .005, False, .05)
+
+GPIO.output(GPIO_ENABLE,GPIO.HIGH)

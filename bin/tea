@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+mins=${1:-0}
+stepper_cnt=${2:-8}
+
+$(dirname $0)/stepper -$stepper_cnt
+sleep $(( 60 * $mins ))
+$(dirname $0)/stepper $stepper_cnt

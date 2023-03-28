@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link rel="stylesheet" href="node_modules/xterm/css/xterm.css" />
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="sidebar.css" />
+    <link rel="stylesheet" href="index.css" />
+    <script src="node_modules/xterm/lib/xterm.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <title>Autoteamaker GUI</title>
+</head>
+
+<body>
+    <h1>Autoteamaker GUI</h1>
+    <div>
+        <button type="button" class="btn btn-secondary" id="up">UP 往上</button>
+        <button type="button" class="btn btn-secondary" id="down">DOWN 往下</button>
+    </div>
+    <hr />
+    <div>
+        <button type="button" class="btn btn-secondary" id="tea01">泡 1 min</button>
+        <button type="button" class="btn btn-secondary" id="tea02">泡 2 min</button>
+        <button type="button" class="btn btn-secondary" id="tea03">泡 3 min</button>
+        <button type="button" class="btn btn-secondary" id="tea04">泡 4 min</button>
+        <button type="button" class="btn btn-secondary" id="tea05">泡 5 min</button>
+        <button type="button" class="btn btn-secondary" id="tea06">泡 6 min</button>
+        <button type="button" class="btn btn-secondary" id="tea07">泡 7 min</button>
+    </div>
+    <hr />
+    <div class="container-fluid">
+        <div class="row rownowrap">
+            <div class="col-md-auto">
+                <div id="terminal"></div>
+            </div>
+        </div>
+    </div>
+    <!-- You can also require other files to run in this process -->
+    <script src="./renderer.js"></script>
+</body>
+
+</html>

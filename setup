@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+ROOT_DIR=$(readlink -f $(dirname $0))
+
+REQUIRED_PACKAGES=""
+REQUIRED_PACKAGES="$REQUIRED_PACKAGES jq"
+REQUIRED_PACKAGES="$REQUIRED_PACKAGES moreutils"
+
+function inst_autoteamaker-gui() {
+	which nodejs >&/dev/null || {
+		# Raspberry Pi default nodejs is not new enough
+		# Use the official installation methond instead: 
+		#    https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
+		curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+		sudo apt-get install -y nodejs
+	}
+
+	( cd $ROOT_DIR/gui || exit
+		PATH="./node_modules/.bin/:$PATH" which electron >&/dev/null || {
+			npm install
+			npm run rebuild
+		}
+	)
+
+	local autostart_file="$HOME/.config/autostart/autoteamaker.desktop"
+
+	[ -e "$autostart_file" ] || {
+		install -D /dev/null "$autostart_file"
+		cat >$autostart_file <<EOD
+[Desktop Entry]
+Name=autoteamaker GUI
+Exec=$HOME/autoteamaker/autoteamaker-gui
+EOD
+	}
+
+	local desktop_shortcut="$HOME/Desktop/autoteamaker.desktop"
+
+	[ -e "$desktop_shortcut" ] || {
+		install -D /dev/null "$desktop_shortcut"
+		cat >$desktop_shortcut <<EOD
+[Desktop Entry]
+Name=autoteamaker GUI
+Type=Application
+Terminal=false
+Icon=$HOME/autoteamaker/gui/favicon.png
+Exec=$HOME/autoteamaker/autoteamaker-gui
+Path=$HOME/autoteamaker/
+EOD
+	}
+}
+
+
+function main() {
+	[ "$(lsb_release -i -s 2>/dev/null)" = "Raspbian" ] || {
+		echo "[SKIP] This system is not Raspberry Pi OS, do nothing..."
+		return 1
+	}
+
+	sudo apt update
+	sudo apt upgrade -y
+	sudo apt install -y $REQUIRED_PACKAGES
+	inst_autoteamaker-gui
+}
+
+main

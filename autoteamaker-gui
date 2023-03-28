@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+ROOT_DIR=$(readlink -f $(dirname $0))
+cd "$ROOT_DIR/gui" || exit
+npm run start
