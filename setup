@@ -49,6 +49,9 @@ EOD
 	}
 }
 
+function inst_pymlx09614() {
+	pip install PyMLX90614
+}
 
 function main() {
 	[ "$(lsb_release -i -s 2>/dev/null)" = "Raspbian" ] || {
@@ -60,6 +63,7 @@ function main() {
 	sudo apt upgrade -y
 	sudo apt install -y $REQUIRED_PACKAGES
 	inst_autoteamaker-gui
+	inst_pymlx09614
 }
 
 main
