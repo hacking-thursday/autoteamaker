@@ -14,6 +14,7 @@ try:
     with open(config_path, 'r') as f:
         config = json.load(f)
 
+    STEPPER_TYPE = config['stepper']['type']
     GPIO_DIRECTION = config['stepper']['gpio_direction']
     GPIO_STEP = config['stepper']['gpio_step']
     GPIO_ENABLE = config['stepper']['gpio_enable']
@@ -51,9 +52,16 @@ if user_input > 0:
 else:
     up_or_down = False
 
+
 round_cnt = abs(user_input)
 
 # call the function, pass the arguments
-mymotortest.motor_go(up_or_down, "Full" , 200 * round_cnt, .005, False, .05)
+if STEPPER_TYPE == "a4988":
+    mymotortest.motor_go(up_or_down, "Full" , 200 * round_cnt, .005, False, .05)
+elif STEPPER_TYPE == "tmc2208":
+    up_or_down = not up_or_down
+    mymotortest.motor_go(up_or_down, "1/16" , 200 * round_cnt * 8, .0004, False, .05)
+else:
+    pass
 
 GPIO.output(GPIO_ENABLE,GPIO.HIGH)
