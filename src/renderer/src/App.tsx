@@ -1,143 +1,76 @@
-import Versions from './components/Versions'
-import icons from './assets/icons.svg'
+import { useMemo, useState } from 'react';
+import {
+  type SelectChangeEvent,
+  Button, ButtonGroup, FormControl, InputLabel, MenuItem, Select, Box, Typography,
+} from '@mui/material';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import EmojiFoodBeverageIcon from '@mui/icons-material/EmojiFoodBeverage';
 
-function App(): JSX.Element {
+import logo from './assets/logo.svg';
+import { useDevDialog } from './hooks/useDevDialog';
+import styles from './styles.module.scss';
+
+function App() {
+  const [duration, setDuration] = useState(1);
+
+  const { devButtonView, dialogView } = useDevDialog();
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setDuration(parseInt(event.target.value));
+  };
+
+  const selectItems = useMemo(() => {
+    return [1, 2, 3, 4, 5, 6, 7].map(value =>
+      <MenuItem key={value} value={value}>
+        {value} 分鐘
+      </MenuItem>)
+  }, []);
+
   return (
-    <div className="container">
-      <Versions></Versions>
-
-      <svg className="hero-logo" viewBox="0 0 900 300">
-        <use xlinkHref={`${icons}#electron`} />
-      </svg>
-      <h2 className="hero-text">
-        You{"'"}ve successfully created an Electron project with React and TypeScript
-      </h2>
-      <p className="hero-tagline">
-        Please try pressing <code>F12</code> to open the devTool
-      </p>
-
-      <div className="links">
-        <div className="link-item">
-          <a target="_blank" href="https://evite.netlify.app" rel="noopener noreferrer">
-            Documentation
-          </a>
-        </div>
-        <div className="link-item link-dot">•</div>
-        <div className="link-item">
-          <a
-            target="_blank"
-            href="https://github.com/alex8088/electron-vite"
-            rel="noopener noreferrer"
-          >
-            Getting Help
-          </a>
-        </div>
-        <div className="link-item link-dot">•</div>
-        <div className="link-item">
-          <a
-            target="_blank"
-            href="https://github.com/alex8088/quick-start/tree/master/packages/create-electron"
-            rel="noopener noreferrer"
-          >
-            create-electron
-          </a>
-        </div>
+    <div className={styles.root}>
+      <div className={styles.logo}>
+        <Typography variant="h5" p={3}>
+          Autoteamaker GUI
+        </Typography>
+        <img src={logo} height="200px" />
       </div>
 
-      <div className="features">
-        <div className="feature-item">
-          <article>
-            <h2 className="title">Configuring</h2>
-            <p className="detail">
-              Config with <span>electron.vite.config.ts</span> and refer to the{' '}
-              <a target="_blank" href="https://evite.netlify.app/config/" rel="noopener noreferrer">
-                config guide
-              </a>
-              .
-            </p>
-          </article>
-        </div>
-        <div className="feature-item">
-          <article>
-            <h2 className="title">HMR</h2>
-            <p className="detail">
-              Edit <span>src/renderer</span> files to test HMR. See{' '}
-              <a
-                target="_blank"
-                href="https://evite.netlify.app/guide/hmr-in-renderer.html"
-                rel="noopener noreferrer"
-              >
-                docs
-              </a>
-              .
-            </p>
-          </article>
-        </div>
-        <div className="feature-item">
-          <article>
-            <h2 className="title">Hot Reloading</h2>
-            <p className="detail">
-              Run{' '}
-              <span>
-                {"'"}electron-vite dev --watch{"'"}
-              </span>{' '}
-              to enable. See{' '}
-              <a
-                target="_blank"
-                href="https://evite.netlify.app/guide/hot-reloading.html"
-                rel="noopener noreferrer"
-              >
-                docs
-              </a>
-              .
-            </p>
-          </article>
-        </div>
-        <div className="feature-item">
-          <article>
-            <h2 className="title">Debugging</h2>
-            <p className="detail">
-              Check out <span>.vscode/launch.json</span>. See{' '}
-              <a
-                target="_blank"
-                href="https://evite.netlify.app/guide/debugging.html"
-                rel="noopener noreferrer"
-              >
-                docs
-              </a>
-              .
-            </p>
-          </article>
-        </div>
-        <div className="feature-item">
-          <article>
-            <h2 className="title">Source Code Protection</h2>
-            <p className="detail">
-              Supported via built-in plugin <span>bytecodePlugin</span>. See{' '}
-              <a
-                target="_blank"
-                href="https://evite.netlify.app/guide/source-code-protection.html"
-                rel="noopener noreferrer"
-              >
-                docs
-              </a>
-              .
-            </p>
-          </article>
-        </div>
-        <div className="feature-item">
-          <article>
-            <h2 className="title">Packaging</h2>
-            <p className="detail">
-              Use{' '}
-              <a target="_blank" href="https://www.electron.build" rel="noopener noreferrer">
-                electron-builder
-              </a>{' '}
-              and pre-configured to pack your app.
-            </p>
-          </article>
-        </div>
+      <Box p={3}>
+        <ButtonGroup variant="contained" aria-label="outlined primary button group">
+          <Button
+            endIcon={<ArrowUpwardIcon />}
+            onClick={() => {
+              // console.log(window.exec)
+              // console.log(window.api)
+            }}>
+            UP 往上
+          </Button>
+          <Button endIcon={<ArrowDownwardIcon />}>
+            DOWN 往下
+          </Button>
+        </ButtonGroup>
+      </Box>
+
+      <div className={styles.select} >
+        <FormControl fullWidth>
+          <InputLabel>泡茶時間</InputLabel>
+          <Select
+            value={duration.toString()}
+            label="泡茶時間"
+            onChange={handleChange}
+          >
+            {selectItems}
+          </Select>
+        </FormControl>
       </div>
+      <Button
+        variant="outlined"
+        endIcon={<EmojiFoodBeverageIcon />}>
+        開始泡茶
+      </Button>
+      {devButtonView}
+      {dialogView}
     </div>
   )
 }

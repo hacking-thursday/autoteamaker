@@ -21,7 +21,12 @@
   },
   "dependencies": {
     "@electron-toolkit/preload": "^1.0.3",
-    "@electron-toolkit/utils": "^1.0.2"
+    "@electron-toolkit/utils": "^1.0.2",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.11.16",
+    "xterm": "^5.1.0"
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^1.0.1",
@@ -42,6 +47,7 @@
     "prettier": "^2.8.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "sass": "^1.60.0",
     "typescript": "^4.9.5",
     "vite": "^4.2.1"
   }
