@@ -4,7 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 
 import icon from '../../resources/icon.png?asset'
 
-import { execAsync } from './command'
+import { execAsync, spawnPromise } from './command'
 
 function createWindow(): void {
   // Create the browser window.
@@ -75,10 +75,20 @@ app.on('window-all-closed', () => {
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
 
+/**
+ * Run a command and return stdout as result, throw error if stderr is printed.
+ */
 ipcMain.handle('system.exec', async (_, command: string) => {
   const { stderr, stdout } = await execAsync(command);
   if (stderr) {
     throw new Error(stderr);
   }
   return stdout;
+})
+
+ipcMain.handle('system.exec.spawn', async (_, command: string, args: string[] = []) => {
+  const result = await spawnPromise(command, args);
+  // const result = await spawnPtyPromise(command);
+
+  return result;
 })

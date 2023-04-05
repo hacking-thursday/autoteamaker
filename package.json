@@ -26,6 +26,11 @@
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.11.16",
+    "@npmcli/promise-spawn": "^6.0.2",
+    "@types/pubsub-js": "^1.8.3",
+    "node-pty": "^0.10.1",
+    "pubsub-js": "^1.9.4",
+    "spawn-promise": "^0.1.8",
     "xterm": "^5.1.0"
   },
   "devDependencies": {

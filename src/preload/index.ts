@@ -6,7 +6,11 @@ const api = {
   exec: async (command: string) => {
     const result = await ipcRenderer.invoke('system.exec', command);
     return result;
-  }
+  },
+  execSpawn: async (command: string, args?: string[]) => {
+    const result = await ipcRenderer.invoke('system.exec.spawn', command, args);
+    return result;
+  },
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

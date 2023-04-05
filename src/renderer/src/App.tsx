@@ -9,10 +9,14 @@ import EmojiFoodBeverageIcon from '@mui/icons-material/EmojiFoodBeverage';
 
 import logo from './assets/logo.svg';
 import { useDevDialog } from './hooks/useDevDialog';
+import { useTerminalExec } from './contexts/TerminalContext';
 import styles from './styles.module.scss';
 
 function App() {
   const [duration, setDuration] = useState(1);
+  const [isRunning, setRunning] = useState(false);
+
+  const { exec } = useTerminalExec();
 
   const { devButtonView, dialogView } = useDevDialog();
 
@@ -39,22 +43,38 @@ function App() {
       <Box p={3}>
         <ButtonGroup variant="contained" aria-label="outlined primary button group">
           <Button
+            disabled={isRunning}
             endIcon={<ArrowUpwardIcon />}
             onClick={() => {
-              window.api.exec("ls").then((v) => {
-                console.log(v);
+              /**
+               * @todo Replace by step up command.
+               */
+              exec("bash", ['print256colours.sh']).then((data) => {
+                const result = new TextDecoder().decode(data);
+                console.log(result)
               })
             }}>
             UP 往上
           </Button>
-          <Button endIcon={<ArrowDownwardIcon />}>
+          <Button
+            disabled={isRunning}
+            endIcon={<ArrowDownwardIcon />}
+            onClick={() => {
+              /**
+               * @todo Replace by step down command.
+               */
+              setRunning(true);
+              exec("sleep", ["5"]).finally(() => {
+                setRunning(false);
+              });
+            }}>
             DOWN 往下
           </Button>
         </ButtonGroup>
       </Box>
 
       <div className={styles.select} >
-        <FormControl fullWidth>
+        <FormControl fullWidth disabled={isRunning}>
           <InputLabel>泡茶時間</InputLabel>
           <Select
             value={duration.toString()}
@@ -66,8 +86,15 @@ function App() {
         </FormControl>
       </div>
       <Button
+        disabled={isRunning}
         variant="outlined"
-        endIcon={<EmojiFoodBeverageIcon />}>
+        endIcon={<EmojiFoodBeverageIcon />}
+        onClick={() => {
+          setRunning(true);
+          exec("./bin/tea ", [duration.toString(), "9"]).finally(() => {
+            setRunning(false);
+          });
+        }}>
         開始泡茶
       </Button>
       {devButtonView}

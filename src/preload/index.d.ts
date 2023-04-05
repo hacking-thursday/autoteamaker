@@ -4,7 +4,8 @@ declare global {
   interface Window {
     electron: ElectronAPI
     api: {
-      exec: (command: string) => Promise<any>
+      exec: (command: string) => Promise<any>;
+      execSpawn: (command: string, args?: string[]) => Promise<Uint8Array>;
     }
   }
 }
