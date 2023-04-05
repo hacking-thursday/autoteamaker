@@ -41,8 +41,9 @@ function App() {
           <Button
             endIcon={<ArrowUpwardIcon />}
             onClick={() => {
-              // console.log(window.exec)
-              // console.log(window.api)
+              window.api.exec("ls").then((v) => {
+                console.log(v);
+              })
             }}>
             UP 往上
           </Button>
