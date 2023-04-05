@@ -1,0 +1,29 @@
+.root {
+  background-color: #ffffff;
+  color           : black;
+  position        : absolute;
+  top             : 0;
+  left            : 0;
+  width           : 100vw;
+  height          : 100vh;
+
+  display        : flex;
+  flex-direction : column;
+  justify-content: center;
+  align-items    : center;
+}
+
+.logo {
+  // height: 100px;
+  display        : flex;
+  flex-direction : column;
+  justify-content: center;
+
+}
+
+.select {
+  width  : 100%;
+  padding: 32px;
+
+  box-sizing: border-box;
+}
