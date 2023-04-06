@@ -46,12 +46,10 @@ function App() {
             disabled={isRunning}
             endIcon={<ArrowUpwardIcon />}
             onClick={() => {
-              /**
-               * @todo Replace by step up command.
-               */
-              exec("bash", ['print256colours.sh']).then((data) => {
-                const result = new TextDecoder().decode(data);
-                console.log(result)
+              setRunning(true);
+              exec("/home/pi/autoteamaker/bin/stepper", ['1']).then(() => {
+              }).finally(() => {
+                setRunning(false);
               })
             }}>
             UP 往上
@@ -60,13 +58,11 @@ function App() {
             disabled={isRunning}
             endIcon={<ArrowDownwardIcon />}
             onClick={() => {
-              /**
-               * @todo Replace by step down command.
-               */
               setRunning(true);
-              exec("sleep", ["5"]).finally(() => {
+              exec("/home/pi/autoteamaker/bin/stepper", ['-1']).then(() => {
+              }).finally(() => {
                 setRunning(false);
-              });
+              })
             }}>
             DOWN 往下
           </Button>
