@@ -1,5 +1,7 @@
 import { promisify } from 'util';
 import { exec, spawn } from 'child_process';
+import { app } from 'electron';
+import path from 'path';
 // import pty from 'node-pty';
 
 export const execAsync = promisify(exec);
@@ -8,7 +10,9 @@ export const spawnPromise = (command: string, args?: string[]) => {
     let result = Buffer.from("");
 
     return new Promise((resolve, reject) => {
-        const _process = spawn(command, args);
+        const _process = spawn(command, args, {
+            cwd: path.resolve(app.getAppPath(), '../')
+        });
         _process.stdout.on('data', (data) => {
             result = Buffer.concat([result, data]);
         });
