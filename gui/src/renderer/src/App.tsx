@@ -87,7 +87,7 @@ function App() {
         endIcon={<EmojiFoodBeverageIcon />}
         onClick={() => {
           setRunning(true);
-          exec("./bin/tea ", [duration.toString(), "9"]).finally(() => {
+          exec("./bin/tea", [duration.toString(), "9"]).finally(() => {
             setRunning(false);
           });
         }}>
