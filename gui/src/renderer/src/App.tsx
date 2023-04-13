@@ -47,7 +47,7 @@ function App() {
             endIcon={<ArrowUpwardIcon />}
             onClick={() => {
               setRunning(true);
-              exec("/home/pi/autoteamaker/bin/stepper", ['1']).then(() => {
+              exec("bin/stepper", ['1']).then(() => {
               }).finally(() => {
                 setRunning(false);
               })
@@ -59,7 +59,7 @@ function App() {
             endIcon={<ArrowDownwardIcon />}
             onClick={() => {
               setRunning(true);
-              exec("/home/pi/autoteamaker/bin/stepper", ['-1']).then(() => {
+              exec("bin/stepper", ['-1']).then(() => {
               }).finally(() => {
                 setRunning(false);
               })
@@ -87,7 +87,7 @@ function App() {
         endIcon={<EmojiFoodBeverageIcon />}
         onClick={() => {
           setRunning(true);
-          exec("./bin/tea ", [duration.toString(), "9"]).finally(() => {
+          exec("./bin/tea", [duration.toString(), "9"]).finally(() => {
             setRunning(false);
           });
         }}>
