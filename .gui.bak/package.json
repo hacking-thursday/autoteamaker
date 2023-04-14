@@ -1,0 +1,21 @@
+{
+  "name": "autoteamaker-gui",
+  "version": "1.0.0",
+  "description": "autoteamaker GUI",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "rebuild": "electron-rebuild"
+  },
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "electron": "^16.0.5",
+    "electron-rebuild": "^3.2.5"
+  },
+  "dependencies": {
+    "bootstrap": "^5.1.3",
+    "node-pty": "latest",
+    "xterm": "^4.13.0"
+  }
+}

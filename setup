@@ -18,7 +18,7 @@ function inst_autoteamaker-gui() {
 	( cd $ROOT_DIR/gui || exit
 		PATH="./node_modules/.bin/:$PATH" which electron >&/dev/null || {
 			npm install
-			npm run rebuild
+			npm run build
 		}
 	)
 
