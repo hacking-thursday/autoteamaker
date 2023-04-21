@@ -19,6 +19,7 @@ function inst_autoteamaker-gui() {
 		PATH="./node_modules/.bin/:$PATH" which electron >&/dev/null || {
 			npm install
 			npm run build
+			npm run build:linux
 		}
 	)
 
