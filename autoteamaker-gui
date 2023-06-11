@@ -4,7 +4,7 @@ ROOT_DIR=$(readlink -f $(dirname $0))
 cd "$ROOT_DIR/gui" || exit
 execBin="./dist/electron-app-1.0.0.AppImage"
 if [ -x "$execBin" ]; then
-  "$execBin"
+  PATH="$PATH:$ROOT_DIR/bin" "$execBin"
   exit
 fi
 npm run start
